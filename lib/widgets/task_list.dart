@@ -10,8 +10,7 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tasks =
-        Provider.of<Tasks>(context, listen: false).findByProjectId(projectId);
+    final tasks = Provider.of<Tasks>(context).findByProjectId(projectId);
     return ListView.builder(
       itemCount: tasks.length,
       itemBuilder: (ctx, i) => Column(

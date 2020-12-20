@@ -4,17 +4,27 @@ import 'package:provider/provider.dart';
 import '../providers/tasks.dart';
 import '../providers/projects.dart';
 import '../widgets/task_list.dart';
+import '../widgets/new_task.dart';
 
 class TasksScreen extends StatelessWidget {
   static const routeName = '/tasks';
 
   @override
   Widget build(BuildContext context) {
+    final project = ModalRoute.of(context).settings.arguments as ProjectItem;
+
     Future<void> _refreshTasks(BuildContext context) async {
       await Provider.of<Tasks>(context, listen: false).fetchAndSetTasks();
     }
 
-    final project = ModalRoute.of(context).settings.arguments as ProjectItem;
+    void _addNewTask(BuildContext ctx) {
+      showDialog(
+          context: ctx,
+          builder: (ctx) {
+            return NewTask(project.id);
+          });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(project.name),
@@ -27,6 +37,10 @@ class TasksScreen extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   )
                 : TaskList(project.id),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _addNewTask(context),
       ),
     );
   }

@@ -32,6 +32,9 @@ class Projects with ChangeNotifier {
         url,
         body: data,
       );
+      if (response.statusCode != 200) {
+        return;
+      }
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
         return;
