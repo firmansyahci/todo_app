@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/projects.dart';
+import '../screens/tasks_screen.dart';
 
 class ProjectsGrid extends StatelessWidget {
   @override
@@ -13,6 +14,10 @@ class ProjectsGrid extends StatelessWidget {
       itemBuilder: (ctx, i) {
         return InkWell(
           borderRadius: BorderRadius.circular(15),
+          onTap: () {
+            Navigator.of(context)
+                .pushNamed(TasksScreen.routeName, arguments: projects[i]);
+          },
           child: Container(
             padding: EdgeInsets.all(15),
             child: Text(
